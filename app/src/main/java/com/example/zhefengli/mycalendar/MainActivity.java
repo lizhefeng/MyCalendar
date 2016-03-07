@@ -24,10 +24,12 @@ import java.util.*;
 public class MainActivity extends AppCompatActivity implements MainFragment.ButtonListener {
     private CalendarView calendarView;
     private TextView datePick;
+    private EditText title;
     private EditText memo;
     private Button addButton;
     private Button eventButton;
     private TimePicker timePicker;
+    DatabaseHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Butt
         setContentView(R.layout.activity_main);
         //Button newEvent = (Button) findViewById(R.id.button);
         //Button viewEvents = (Button) findViewById(R.id.button2);
+        db = new DatabaseHandler(this);
         if(findViewById(R.id.main_fragment_container) != null){
             if(savedInstanceState != null){
                 return;
@@ -65,32 +68,44 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Butt
 
     public void addClicked(View view) throws ParseException{
         calendarView = (CalendarView) findViewById(R.id.calendarView);
+        title = (EditText) findViewById(R.id.editText2);
         memo = (EditText) findViewById(R.id.editText);
         datePick = (TextView) findViewById(R.id.textView2);
         timePicker = (TimePicker) findViewById(R.id.timePicker);
         if(datePick.getText().toString().equals("")){
             Toast.makeText(getApplicationContext(), "Please select a specific date.", Toast.LENGTH_LONG).show();
         }
+        else if(title.getText().toString().equals("")){
+            Toast.makeText(getApplicationContext(), "Please add a title", Toast.LENGTH_LONG).show();
+        }
         else if(memo.getText().toString().equals("")){
-            Toast.makeText(getApplicationContext(), "Please say something.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Please say some memos.", Toast.LENGTH_LONG).show();
         }
         else {
             //Toast.makeText(getApplicationContext(), "You have successfully add an event.", Toast.LENGTH_LONG).show();
-            String tempInfo = datePick.getText().toString().substring(25);
+            //String tempInfo = datePick.getText().toString().substring(25);
             //String[] dateArray = tempInfo.split("/");
             //int day =  Integer.parseInt(dateArray[0]);
             //int month = Integer.parseInt(dateArray[1]);
             //int year = Integer.parseInt(dateArray[2]);
-            DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-            Date date = formatter.parse(tempInfo);
-            long dateInlong = date.getTime();
-            calendarView.setDate(dateInlong);
+            //DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+            //Date date = formatter.parse(tempInfo);
+            //long dateInlong = date.getTime();
+            //calendarView.setDate(dateInlong);
             Toast.makeText(getApplicationContext(), "You have successfully add an event.", Toast.LENGTH_LONG).show();
+            String timeSelect = datePick.getText().toString().substring(25);
+            db.addReminder(new Reminder(title.getText().toString(), memo.getText().toString(), timeSelect));
+
         }
 
     }
 
     public void eventsClicked(View view){
-
+        EventsFragment eventsFragment = new EventsFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_fragment_container, eventsFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
