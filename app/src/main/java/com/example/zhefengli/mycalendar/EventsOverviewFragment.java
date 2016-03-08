@@ -13,25 +13,19 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 /**
- * Created by zhefengli on 3/6/16.
+ * Created by zhefengli on 3/7/16.
  */
-public class EventsFragment extends Fragment {
+public class EventsOverviewFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        String dateText = getArguments().getString("eventDate");
         DatabaseHandler db = new DatabaseHandler(getActivity());
-        ArrayList<Reminder> currentReminders = db.getAllReminders();
-        final ArrayList<Reminder> specifiedReminders = new ArrayList<>();
-        for(int i = 0; i < currentReminders.size(); i++){
-            if(currentReminders.get(i).getDate().equals(dateText))
-                specifiedReminders.add(currentReminders.get(i));
-        }
-
-        if(specifiedReminders.isEmpty())
+        final ArrayList<Reminder> allReminders = db.getAllReminders();
+        if(allReminders.isEmpty())
             return inflater.inflate(R.layout.fragment_noevents, container, false);
+
         else{
             View view = inflater.inflate(R.layout.fragment_events, container, false);
             final ListView lv1 = (ListView) view.findViewById(R.id.custom_list);
-            final CustomListAdapter customListAdapter = new CustomListAdapter(getActivity(), specifiedReminders);
+            final CustomListAdapter customListAdapter = new CustomListAdapter(getActivity(), allReminders);
             final DatabaseHandler databaseHandler = db;
             lv1.setAdapter(customListAdapter);
             lv1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -43,8 +37,8 @@ public class EventsFragment extends Fragment {
                     final int listPos = position;
                     builder.setNegativeButton("Yes", new AlertDialog.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which){
-                            databaseHandler.deleteReminder(specifiedReminders.get(listPos));
-                            specifiedReminders.remove(listPos);
+                            databaseHandler.deleteReminder(allReminders.get(listPos));
+                            allReminders.remove(listPos);
                             customListAdapter.notifyDataSetChanged();
                         }
                     });
@@ -58,4 +52,3 @@ public class EventsFragment extends Fragment {
         }
     }
 }
-

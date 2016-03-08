@@ -71,12 +71,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 reminder.setDate(cursor.getString(0));
                 reminder.setTitle(cursor.getString(1));
                 reminder.setMemo(cursor.getString(2));
-                // Adding contact to list
+                // Adding reminder to list
                 reminderList.add(reminder);
             } while (cursor.moveToNext());
         }
 
-        // return contact list
+        // return reminder list
         return reminderList;
+    }
+
+    public void deleteReminder(Reminder reminder) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_REMINDERS, KEY_DATE + "=? and " + KEY_TITLE + "=? and " + KEY_MEMO + "=?", new String[]{reminder.getDate(), reminder.getTitle(), reminder.getMemo()});
+        db.close();
     }
 }

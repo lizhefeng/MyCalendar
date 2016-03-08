@@ -23,12 +23,14 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:id="@+id/editText2"
             android:hint="Title" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:id="@+id/editText"
             android:hint="Please add memo here." />
 

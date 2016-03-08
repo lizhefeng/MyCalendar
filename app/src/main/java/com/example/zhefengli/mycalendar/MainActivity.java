@@ -61,7 +61,12 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Butt
     }
 
     public void onViewEventsClick() {
-
+            EventsOverviewFragment eventsOverviewFragment = new EventsOverviewFragment();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_fragment_container, eventsOverviewFragment)
+                        .addToBackStack(null)
+                        .commit();
     }
 
 
@@ -92,12 +97,20 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Butt
             //Date date = formatter.parse(tempInfo);
             //long dateInlong = date.getTime();
             //calendarView.setDate(dateInlong);
-            Toast.makeText(getApplicationContext(), "You have successfully add an event.", Toast.LENGTH_LONG).show();
             String timeSelect = datePick.getText().toString().substring(25);
-            //int hour = timePicker.getHour();
-            //int minutes = timePicker.getMinute();
-            db.addReminder(new Reminder(title.getText().toString(), memo.getText().toString(), timeSelect));
-
+            ArrayList<Reminder> currentReminders = db.getAllReminders();
+            Reminder reminder = new Reminder(title.getText().toString(), memo.getText().toString(), timeSelect);
+            if(currentReminders.contains(reminder)){
+                Toast.makeText(getApplicationContext(), "You have already created this event!", Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "You have successfully add an event!", Toast.LENGTH_LONG).show();
+                //int hour = timePicker.getHour();
+                //int minutes = timePicker.getMinute();
+                db.addReminder(reminder);
+                title.getText().clear();
+                memo.getText().clear();
+            }
         }
 
     }

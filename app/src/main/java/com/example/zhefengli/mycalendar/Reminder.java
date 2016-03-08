@@ -41,4 +41,16 @@ public class Reminder {
     public String getDate(){
         return this.date;
     }
+
+    public boolean equals(Object object)
+    {
+        boolean same = false;
+
+        if (object != null && object instanceof Reminder)
+        {
+            same = (this.title.equals(((Reminder) object).title)) && (this.date.equals(((Reminder) object).date)) && (this.memo.equals(((Reminder) object).memo));
+        }
+
+        return same;
+    }
 }
