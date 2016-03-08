@@ -17,7 +17,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Wecome to My Calendar!" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/Welcome"
+            android:shadowRadius="1.5"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:typeface="sans"
+            android:id="@+id/textView4" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -29,19 +35,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="In this app, you can view calendar and edit events."
+            android:text="@string/AppFunction"
             android:id="@+id/textView" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="New Event"
+            android:textStyle="bold"
             android:id="@+id/button" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="View Events"
+            android:textStyle="bold"
             android:id="@+id/button2" />
+
     </LinearLayout>
 </RelativeLayout>

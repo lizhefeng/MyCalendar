@@ -25,14 +25,14 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:id="@+id/editText2"
-            android:hint="Title" />
+            android:hint="@string/HintTitle" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:id="@+id/editText"
-            android:hint="Please add memo here." />
+            android:hint="@string/HintMemo" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -67,6 +67,7 @@
                     android:layout_weight="50"
                     android:onClick="eventsClicked" />
             </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

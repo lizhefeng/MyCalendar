@@ -7,6 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Oops... No Events At All!"
+        android:text="@string/NoEvents"
         android:id="@+id/textView3" />
 </LinearLayout>

@@ -17,6 +17,7 @@ public class CalendarFragment extends Fragment {
     private TextView datePick;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
 
         calendarView = (CalendarView) view.findViewById(R.id.calendarView);

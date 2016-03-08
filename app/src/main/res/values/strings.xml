@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MyCalendar</string>
+    <string name="Welcome">Welcome to My Calendar!</string>
+    <string name="AppFunction">In this app, you can view, add, and delete events on a particular day.</string>
+    <string name="HintTitle">Title</string>
+    <string name="HintMemo">Please add memo here.</string>
+    <string name="NoEvents">Oops... No Events At All!</string>
 </resources>
