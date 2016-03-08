@@ -94,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Butt
             //calendarView.setDate(dateInlong);
             Toast.makeText(getApplicationContext(), "You have successfully add an event.", Toast.LENGTH_LONG).show();
             String timeSelect = datePick.getText().toString().substring(25);
+            //int hour = timePicker.getHour();
+            //int minutes = timePicker.getMinute();
             db.addReminder(new Reminder(title.getText().toString(), memo.getText().toString(), timeSelect));
 
         }
@@ -101,11 +103,22 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Butt
     }
 
     public void eventsClicked(View view){
-        EventsFragment eventsFragment = new EventsFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_fragment_container, eventsFragment)
-                .addToBackStack(null)
-                .commit();
+        datePick = (TextView) findViewById(R.id.textView2);
+        if(datePick.getText().toString().equals("")){
+            Toast.makeText(getApplicationContext(), "Please select a specific date to view events.", Toast.LENGTH_LONG).show();
+        }
+        else{
+            String timeSelect = datePick.getText().toString().substring(25);
+            Bundle bundle = new Bundle();
+            bundle.putString("eventDate", timeSelect);
+            EventsFragment eventsFragment = new EventsFragment();
+            eventsFragment.setArguments(bundle);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_fragment_container, eventsFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
+
     }
 }

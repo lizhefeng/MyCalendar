@@ -24,7 +24,8 @@ public class CalendarFragment extends Fragment {
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                datePick.setText("You currently pick date: " + month + "/" + dayOfMonth + "/" + year);
+                month = month + 1;
+                datePick.setText("You currently pick date: " + month  + "/" + dayOfMonth + "/" + year);
 
                 Toast.makeText(getActivity().getApplicationContext(), "Date Picked:\n" + "Day = " + dayOfMonth + "\n" + "Month = " + month + "\n" + "Year = " + year, Toast.LENGTH_LONG).show();
             }

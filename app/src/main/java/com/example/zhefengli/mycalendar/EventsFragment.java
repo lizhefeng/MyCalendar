@@ -14,11 +14,24 @@ import java.util.ArrayList;
  */
 public class EventsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_events, container, false);
+        String dateText = getArguments().getString("eventDate");
         DatabaseHandler db = new DatabaseHandler(getActivity());
-        ArrayList currentReminders = db.getAllReminders();
-        final ListView lv1 = (ListView) view.findViewById(R.id.custom_list);
-        lv1.setAdapter(new CustomListAdapter(getActivity(), currentReminders));
-        return view;
+        ArrayList<Reminder> currentReminders = db.getAllReminders();
+        ArrayList<Reminder> specifiedReminders = new ArrayList<>();
+        for(int i = 0; i < currentReminders.size(); i++){
+            if(currentReminders.get(i).getDate().equals(dateText))
+                specifiedReminders.add(currentReminders.get(i));
+        }
+
+        if(specifiedReminders.isEmpty())
+            return inflater.inflate(R.layout.fragment_noevents, container, false);
+        else{
+            View view = inflater.inflate(R.layout.fragment_events, container, false);
+            final ListView lv1 = (ListView) view.findViewById(R.id.custom_list);
+            lv1.setAdapter(new CustomListAdapter(getActivity(), specifiedReminders));
+            return view;
+        }
+
     }
 }
+
