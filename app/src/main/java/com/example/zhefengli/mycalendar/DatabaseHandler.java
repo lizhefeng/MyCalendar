@@ -75,7 +75,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 reminderList.add(reminder);
             } while (cursor.moveToNext());
         }
-
+        cursor.close();
+        db.close();
         // return reminder list
         return reminderList;
     }

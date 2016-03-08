@@ -24,11 +24,11 @@ public class EventsOverviewFragment extends Fragment{
 
         else{
             View view = inflater.inflate(R.layout.fragment_events, container, false);
-            final ListView lv1 = (ListView) view.findViewById(R.id.custom_list);
-            final CustomListAdapter customListAdapter = new CustomListAdapter(getActivity(), allReminders);
+            final ListView listView = (ListView) view.findViewById(R.id.event_list);
+            final EventListAdapter eventListAdapter = new EventListAdapter(getActivity(), allReminders);
             final DatabaseHandler databaseHandler = db;
-            lv1.setAdapter(customListAdapter);
-            lv1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            listView.setAdapter(eventListAdapter);
+            listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -39,7 +39,7 @@ public class EventsOverviewFragment extends Fragment{
                         public void onClick(DialogInterface dialog, int which){
                             databaseHandler.deleteReminder(allReminders.get(listPos));
                             allReminders.remove(listPos);
-                            customListAdapter.notifyDataSetChanged();
+                            eventListAdapter.notifyDataSetChanged();
                         }
                     });
                     builder.setPositiveButton("No", null);

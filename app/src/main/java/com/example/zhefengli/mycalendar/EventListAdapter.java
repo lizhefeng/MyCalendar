@@ -10,11 +10,11 @@ import java.util.ArrayList;
 /**
  * Created by zhefengli on 3/7/16.
  */
-public class CustomListAdapter extends BaseAdapter {
+public class EventListAdapter extends BaseAdapter {
     private ArrayList<Reminder> listData;
     private LayoutInflater layoutInflater;
 
-    public CustomListAdapter(Context aContext, ArrayList<Reminder> listData) {
+    public EventListAdapter(Context aContext, ArrayList<Reminder> listData) {
         this.listData = listData;
         layoutInflater = LayoutInflater.from(aContext);
     }

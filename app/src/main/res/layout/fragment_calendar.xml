@@ -12,8 +12,7 @@
             android:layout_height="260dp"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="16dp"
-            android:id="@+id/calendarView"
-            android:nestedScrollingEnabled="false"/>
+            android:id="@+id/calendarView" />
 
         <TextView
             android:layout_width="match_parent"
