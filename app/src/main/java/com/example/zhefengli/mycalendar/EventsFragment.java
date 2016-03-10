@@ -22,7 +22,9 @@ public class EventsFragment extends Fragment {
         ArrayList<Reminder> currentReminders = db.getAllReminders();
         final ArrayList<Reminder> specifiedReminders = new ArrayList<>();
         for(int i = 0; i < currentReminders.size(); i++){
-            if(currentReminders.get(i).getDate().equals(dateText))
+            String[] tempString = currentReminders.get(i).getDate().split(", ");
+            String date = tempString[0];
+            if(date.equals(dateText))
                 specifiedReminders.add(currentReminders.get(i));
         }
 
@@ -30,8 +32,20 @@ public class EventsFragment extends Fragment {
             return inflater.inflate(R.layout.fragment_noevents, container, false);
         else{
             View view = inflater.inflate(R.layout.fragment_events, container, false);
+            ArrayList<Reminder> timeOnlyReminders = new ArrayList<>();
+            for(int j = 0; j < specifiedReminders.size(); j++){
+                String title = specifiedReminders.get(j).getTitle();
+                String memo = specifiedReminders.get(j).getMemo();
+                String date = specifiedReminders.get(j).getDate();
+                Reminder reminder = new Reminder(title, memo, date);
+                timeOnlyReminders.add(reminder);
+                String compDate = timeOnlyReminders.get(j).getDate();
+                String[] dateTime = compDate.split(", ");
+                timeOnlyReminders.get(j).setDate(dateTime[1]);
+            }
+
             final ListView listView = (ListView) view.findViewById(R.id.event_list);
-            final EventListAdapter eventListAdapter = new EventListAdapter(getActivity(), specifiedReminders);
+            final EventListAdapter eventListAdapter = new EventListAdapter(getActivity(), timeOnlyReminders);
             final DatabaseHandler databaseHandler = db;
             listView.setAdapter(eventListAdapter);
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

@@ -2,6 +2,7 @@ package com.example.zhefengli.mycalendar;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.TimePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
@@ -25,11 +26,12 @@ import java.util.*;
 public class MainActivity extends AppCompatActivity implements MainFragment.ButtonListener {
     private CalendarView calendarView;
     private TextView datePick;
+    private TextView timePick;
     private EditText title;
     private EditText memo;
-    private Button addButton;
-    private Button eventButton;
-    private TimePicker timePicker;
+    //private Button addButton;
+    //private Button eventButton;
+    //private TimePicker timePicker;
     DatabaseHandler db;
 
     @Override
@@ -71,43 +73,60 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Butt
     }
 
 
+    public void setTimeClicked(View view){
+        final Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                if(view.isShown()){
+                    timePick = (TextView) findViewById(R.id.textView5);
+                    String hour = String.valueOf(hourOfDay);
+                    String minutes = String.valueOf(minute);
+                    if(hourOfDay < 10){
+                        hour = "0" + hour;
+                    }
+                    if(minute < 10){
+                        minutes = "0" + minutes;
+                    }
+                        timePick.setText("You set time to: " + hour + ":" + minutes);
+                }
+            }
+        }, hour, minute, true);
+        timePickerDialog.show();
+
+    }
 
     public void addClicked(View view) throws ParseException{
         calendarView = (CalendarView) findViewById(R.id.calendarView);
         title = (EditText) findViewById(R.id.editText2);
         memo = (EditText) findViewById(R.id.editText);
         datePick = (TextView) findViewById(R.id.textView2);
-        timePicker = (TimePicker) findViewById(R.id.timePicker);
+        timePick = (TextView) findViewById(R.id.textView5);
         if(datePick.getText().toString().equals("")){
             Toast.makeText(getApplicationContext(), "Please select a specific date.", Toast.LENGTH_LONG).show();
         }
         else if(title.getText().toString().equals("")){
-            Toast.makeText(getApplicationContext(), "Please add a title", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Please add a title.", Toast.LENGTH_LONG).show();
         }
         else if(memo.getText().toString().equals("")){
             Toast.makeText(getApplicationContext(), "Please say some memos.", Toast.LENGTH_LONG).show();
         }
+        else if(timePick.getText().toString().equals("")){
+            Toast.makeText(getApplicationContext(), "Please set the event time.", Toast.LENGTH_LONG).show();
+        }
         else {
-            //Toast.makeText(getApplicationContext(), "You have successfully add an event.", Toast.LENGTH_LONG).show();
-            //String tempInfo = datePick.getText().toString().substring(25);
-            //String[] dateArray = tempInfo.split("/");
-            //int day =  Integer.parseInt(dateArray[0]);
-            //int month = Integer.parseInt(dateArray[1]);
-            //int year = Integer.parseInt(dateArray[2]);
-            //DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-            //Date date = formatter.parse(tempInfo);
-            //long dateInlong = date.getTime();
-            //calendarView.setDate(dateInlong);
+            String timeOnly = timePick.getText().toString().substring(17);
             String timeSelect = datePick.getText().toString().substring(25);
+            String dateAndTime = timeSelect + ", " + timeOnly;
             ArrayList<Reminder> currentReminders = db.getAllReminders();
-            Reminder reminder = new Reminder(title.getText().toString(), memo.getText().toString(), timeSelect);
+            Reminder reminder = new Reminder(title.getText().toString(), memo.getText().toString(), dateAndTime);
             if(currentReminders.contains(reminder)){
                 Toast.makeText(getApplicationContext(), "You have already created this event!", Toast.LENGTH_LONG).show();
             }
             else{
                 Toast.makeText(getApplicationContext(), "You have successfully add an event!", Toast.LENGTH_LONG).show();
-                //int hour = timePicker.getHour();
-                //int minutes = timePicker.getMinute();
                 db.addReminder(reminder);
                 title.getText().clear();
                 memo.getText().clear();

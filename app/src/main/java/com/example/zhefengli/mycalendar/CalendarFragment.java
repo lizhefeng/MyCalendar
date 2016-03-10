@@ -27,7 +27,7 @@ public class CalendarFragment extends Fragment {
         datePick = (TextView) view.findViewById(R.id.textView2);
         final Long initDate = calendarView.getDate();
         Date date = new Date(initDate);
-        SimpleDateFormat mDy = new SimpleDateFormat("MM/dd/yy");
+        SimpleDateFormat mDy = new SimpleDateFormat("MM/dd/yyyy");
         String datetText = mDy.format(date);
         datePick.setText("You currently pick date: " + datetText);
 
@@ -36,7 +36,13 @@ public class CalendarFragment extends Fragment {
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 if (calendarView.getDate() != initDate) {
                     month = month + 1;
-                    datePick.setText("You currently pick date: " + month + "/" + dayOfMonth + "/" + year);
+                    String mo = String.valueOf(month);
+                    String day = String.valueOf(dayOfMonth);
+                    if(month < 10)
+                        mo = "0" + mo;
+                    if(dayOfMonth < 10)
+                        day = "0" + day;
+                    datePick.setText("You currently pick date: " + mo + "/" + day + "/" + year);
                     String toastText = "Date Picked:\n" + "Month = " + month + "\n" + "Day = " + dayOfMonth + "\n" + "Year = " + year;
                     Toast.makeText(getActivity().getApplicationContext(), toastText, Toast.LENGTH_LONG).show();
                 }

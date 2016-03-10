@@ -5,4 +5,6 @@
     <string name="HintTitle">Title</string>
     <string name="HintMemo">Please add memo here.</string>
     <string name="NoEvents">Oops... No Events At All!</string>
+    <string name="SingleDay">Add/View On A Day</string>
+    <string name="AllEvents">All Events</string>
 </resources>

@@ -41,14 +41,14 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New Event"
+            android:text="@string/SingleDay"
             android:textStyle="bold"
             android:id="@+id/button" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="View Events"
+            android:text="@string/AllEvents"
             android:textStyle="bold"
             android:id="@+id/button2" />
 
