@@ -58,6 +58,7 @@ public class EventsFragment extends Fragment {
                     builder.setNegativeButton("Yes", new AlertDialog.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which){
                             databaseHandler.deleteReminder(specifiedReminders.get(listPos));
+                            specifiedReminders.remove(listPos);
                             timeOnlyReminders.remove(listPos);
                             eventListAdapter.notifyDataSetChanged();
                         }
