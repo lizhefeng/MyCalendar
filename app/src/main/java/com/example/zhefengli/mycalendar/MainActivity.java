@@ -1,25 +1,15 @@
 package com.example.zhefengli.mycalendar;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.ActionBar;
 import android.os.Bundle;
-import android.content.Intent;
-//import android.view.Menu;
-//import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -29,17 +19,12 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Butt
     private TextView timePick;
     private EditText title;
     private EditText memo;
-    //private Button addButton;
-    //private Button eventButton;
-    //private TimePicker timePicker;
     DatabaseHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Button newEvent = (Button) findViewById(R.id.button);
-        //Button viewEvents = (Button) findViewById(R.id.button2);
         db = new DatabaseHandler(this);
         if(findViewById(R.id.main_fragment_container) != null){
             if(savedInstanceState != null){

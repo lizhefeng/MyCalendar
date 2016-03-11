@@ -36,10 +36,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REMINDERS);
 
-        // Create tables again
         onCreate(db);
     }
 
@@ -51,14 +49,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_TITLE, reminder.getTitle()); // Title
         values.put(KEY_MEMO, reminder.getMemo()); // Memo
 
-        // Inserting Row
         db.insert(TABLE_REMINDERS, null, values);
-        db.close(); // Closing database connection
+        db.close();
     }
 
     public ArrayList<Reminder> getAllReminders() {
         ArrayList<Reminder> reminderList = new ArrayList<Reminder>();
-        // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_REMINDERS;
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -77,7 +73,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         cursor.close();
         db.close();
-        // return reminder list
         return reminderList;
     }
 
