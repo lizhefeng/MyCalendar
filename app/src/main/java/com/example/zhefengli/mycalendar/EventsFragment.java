@@ -32,7 +32,7 @@ public class EventsFragment extends Fragment {
             return inflater.inflate(R.layout.fragment_noevents, container, false);
         else{
             View view = inflater.inflate(R.layout.fragment_events, container, false);
-            ArrayList<Reminder> timeOnlyReminders = new ArrayList<>();
+            final ArrayList<Reminder> timeOnlyReminders = new ArrayList<>();
             for(int j = 0; j < specifiedReminders.size(); j++){
                 String title = specifiedReminders.get(j).getTitle();
                 String memo = specifiedReminders.get(j).getMemo();
@@ -58,7 +58,7 @@ public class EventsFragment extends Fragment {
                     builder.setNegativeButton("Yes", new AlertDialog.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which){
                             databaseHandler.deleteReminder(specifiedReminders.get(listPos));
-                            specifiedReminders.remove(listPos);
+                            timeOnlyReminders.remove(listPos);
                             eventListAdapter.notifyDataSetChanged();
                         }
                     });
